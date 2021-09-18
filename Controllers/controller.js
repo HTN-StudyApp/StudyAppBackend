@@ -28,7 +28,8 @@ exports.addSet = async (req,res) => {
     let studySet = {
         name: req.body.name,
         email: email,
-        terms: req.body.terms
+        terms: req.body.terms,
+        answers: req.body.answers
         
     }
     setDB.doc(email).collection("OwnedSets").doc(req.body.name).set(studySet).then(() => {
@@ -73,7 +74,6 @@ exports.readSetByName = async (req,res) => {
 exports.setPoints = async (req,res) => {
     var cookies = parseCookies(req)
     const email = cookies.securityContextId;
-    //TODO get email from cookie
     let points = {
         points: req.body.points,
         email: email
@@ -86,7 +86,7 @@ exports.setPoints = async (req,res) => {
         console.log(`${req.body.points} points added`)
         
     })
-    res.redirect('/');
+    res.send(`${req.body.points} points added`);
 }
 
 
@@ -100,6 +100,8 @@ exports.readPointsByEmail = async (req,res) => {
     }
     snapshot.forEach(doc => {
         console.log(doc.data().points.split('> ').pop());
+        res.send(doc.data().points.split('> ').pop())
     })
-    res.redirect('/');
+
+
 }
