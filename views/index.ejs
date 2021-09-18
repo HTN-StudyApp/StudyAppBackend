@@ -117,8 +117,9 @@
 </head>
 <body>
     <h1>This Page is a sample for Auth.  Will be replaced by react</h1>
-    <div id="firebaseui-auth-container">Please Login To Continue</div>
+    <div id="firebaseui-auth-container"></div>
 
+	<h2>Add Set</h2>
     <form action="/addSet" method='POST'>
 		<label for="name">Name</label>
 			<input type="text" name="name" id="name">
@@ -127,8 +128,16 @@
 			<input type="text" name="terms[]">
 			<input type="text" name="terms[]">
 			<input type="text" name="terms[]">
-		<input type="submit" value="send">
+		<input type="submit" value="Add Set">
     </form>
+
+	<h2>Set Points</h2>
+	<form action="/setPoints" method="POST">
+		<label for="points">Points:</label>
+			<input type="text" name="points" id="points">
+			<input type="submit" value="set points">
+	
+	</form>
 
  
 </body>

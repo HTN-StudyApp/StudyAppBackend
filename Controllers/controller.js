@@ -5,40 +5,33 @@ const setDB = db.collection('StudySets');
 const pointsDB = db.collection('UserPoints');
 
 
-function extractCookieValue(cookieString, cookieName){
 
-    var pos = cookieString.indexOf(cookieName + "=");
-    var pos2 = cookieString.indexOf(";", pos);
-    var value = "";
-    //console.log("p1: " + pos + " p2: " + pos2 + " cookieString: " + cookieString);
-    
 
-    if(pos >= 0 && pos2 == -1){
-        pos = pos + cookieName.length + 1;
-        value = cookieString.substring(pos);
-        //console.log("value: " + value);
-    }
-    else if(pos >= 0 && pos2 >= 0){
-        pos = pos + cookieName.length + 1;
-        value = cookieString.substring(pos,pos2);
-        
-        
-    }
-    return value;
+function parseCookies (request) {
+    var list = {},
+        rc = request.headers.cookie;
+
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
 }
+
 
 //*For Sets
 exports.addSet = async (req,res) => {
-    var cookieString = req.headers.cookie;
-    var email = extractCookieValue(cookieString, 'secuirtyContextId');
-    console.log(`Your email is ${email}`);
+    var cookies = parseCookies(req)
+    const email = cookies.securityContextId;
+    //console.log(`Your email is ${email}`);
     let studySet = {
         name: req.body.name,
-        //email: email,
+        email: email,
         terms: req.body.terms
         
     }
-    setDB.doc("232fink").set(studySet).then(() => {
+    setDB.doc(email).set(studySet).then(() => {
         console.log("Set Added!")
         res.send("Set Added")
     })
@@ -55,7 +48,9 @@ exports.readAllSets = async (req,res) => {
 
 exports.readSetByName = async (req,res) => {
     //TODO parse only sets owned by user
-    const snapshot = await setDB.where('name', '==', req.params.name).get();
+    var cookies = parseCookies(req)
+    const email = cookies.securityContextId;
+    const snapshot = await setDB.where('email', '==', email).where('name', '==', req.params.name).get();
     if(snapshot.empty){
         console.log('No mathcing documents.');
         return;
@@ -66,13 +61,15 @@ exports.readSetByName = async (req,res) => {
     })
 }
 //*For Points
-exports.addPoints = async (req,res) => {
+exports.setPoints = async (req,res) => {
+    var cookies = parseCookies(req)
+    const email = cookies.securityContextId;
     //TODO get email from cookie
     let points = {
         points: req.body.points
     }
-    pointsDB.doc("eligfinkel@gmail.com").set(points).then(() => {
-        console.log(`${points.points} added to eligfinkel@gmail.com`);
-        res.send(`${points.points} added to eligfinkel@gmail.com`);
+    pointsDB.doc(email).set(points).then(() => {
+        console.log(`${points.points} added to ${email}`);
+        res.send(`${points.points} added to ${email}`);
     })
 }

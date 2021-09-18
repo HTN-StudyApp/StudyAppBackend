@@ -6,9 +6,7 @@ const setDB = db.collection('StudySets');
 const controller = require('../Controllers/controller.js');
 const cookieParser = require('cookie-parser');
 
-router.get('/', (req,res)=>{
-    res.send("Hello World");
-})
+
 
 //*For Sets
 router.post('/addSet',controller.addSet)
@@ -18,10 +16,10 @@ router.get('/readallSets', controller.readAllSets);
 router.get('/readSetByName/:name', controller.readSetByName);
 
 //*For Points
-router.post('/addPoints', controller.addPoints);
+router.post('/setPoints', controller.setPoints);
 
 //*Testing EJS
-router.get('/login', (req,res) => {
+router.get('/', (req,res) => {
     res.render('index');
 })
 
