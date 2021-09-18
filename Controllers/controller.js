@@ -24,7 +24,6 @@ function parseCookies (request) {
 exports.addSet = async (req,res) => {
     var cookies = parseCookies(req)
     const email = cookies.securityContextId;
-    //console.log(`Your email is ${email}`);
     let studySet = {
         name: req.body.name,
         email: email,
@@ -78,10 +77,6 @@ exports.setPoints = async (req,res) => {
         points: req.body.points,
         email: email
     }
-    /*pointsDB.doc(email).set(points).then(() => {
-        console.log(`${points.points} added to ${email}`);
-        res.send(`${points.points} added to ${email}`);
-    })*/
     setDB.doc(email).set(points).then(() => {
         console.log(`${req.body.points} points added`)
         
