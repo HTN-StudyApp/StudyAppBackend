@@ -18,6 +18,8 @@ router.get('/readSetByName/:name', controller.readSetByName);
 //*For Points
 router.post('/setPoints', controller.setPoints);
 
+router.get('/readPoints', controller.readPointsByEmail);
+
 //*Testing EJS
 router.get('/', (req,res) => {
     res.render('index');
