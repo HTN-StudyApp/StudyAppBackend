@@ -29,6 +29,7 @@
     "express-session": "^1.17.2",
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
+    "gitignore": "^0.7.0",
     "googleapis": "^87.0.0",
     "nodemon": "^2.0.12",
     "path": "^0.12.7",

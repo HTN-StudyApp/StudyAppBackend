@@ -77,9 +77,28 @@ exports.setPoints = async (req,res) => {
     let points = {
         points: req.body.points
     }
-    pointsDB.doc(email).set(points).then(() => {
+    /*pointsDB.doc(email).set(points).then(() => {
         console.log(`${points.points} added to ${email}`);
         res.send(`${points.points} added to ${email}`);
+    })*/
+    setDB.doc(email).set(points).then(() => {
+        console.log(`${req.body.points} points added`)
+        
     })
     res.redirect('/');
+}
+
+
+exports.readPointsByName = async (req,res) => {
+    var cookies = parseCookies(req)
+    const email = cookies.securityContextId;
+    const snapshot = await setDB.where('email', '==', email).where('name', '==', req.params.name).get();
+    if(snapshot.empty){
+        console.log('No mathcing documents.');
+        return;
+    }
+    snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        res.send(doc.id, '=>', doc.data());
+    })
 }
