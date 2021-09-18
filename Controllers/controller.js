@@ -31,18 +31,26 @@ exports.addSet = async (req,res) => {
         terms: req.body.terms
         
     }
-    setDB.doc(email).set(studySet).then(() => {
+    setDB.doc(email).collection("OwnedSets").doc(req.body.name).set(studySet).then(() => {
         console.log("Set Added!")
-        res.send("Set Added")
+        
     })
+    res.redirect('/');
 }
 
 exports.readAllSets = async (req,res) => {
-    const snapshot = await setDB.get();
+    var cookies = parseCookies(req)
+    const email = cookies.securityContextId;
+    const snapshot = await setDB.where('email', '==', email).get();
+    if(snapshot.empty){
+        console.log('No mathcing documents.');
+        return;
+    }
     snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
-        res.send(doc.data());
+        // TODO return data somehow
     })
+    res.redirect('/');
 
 }
 
@@ -59,6 +67,7 @@ exports.readSetByName = async (req,res) => {
         console.log(doc.id, '=>', doc.data());
         res.send(doc.id, '=>', doc.data());
     })
+    res.redirect('/');
 }
 //*For Points
 exports.setPoints = async (req,res) => {
@@ -72,4 +81,5 @@ exports.setPoints = async (req,res) => {
         console.log(`${points.points} added to ${email}`);
         res.send(`${points.points} added to ${email}`);
     })
+    res.redirect('/');
 }
