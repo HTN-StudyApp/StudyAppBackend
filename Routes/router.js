@@ -11,7 +11,9 @@ router.get('/', (req,res)=>{
 
 router.post('/addSet',controller.addSet)
 
-router.get('/readallSets', controller.readAllSets)
+router.get('/readallSets', controller.readAllSets);
+
+router.get('/readSetByName/:name', controller.readSetByName);
 
 
 

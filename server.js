@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('firebase-admin')
-const serviceAccount = require('./creds/serviceKey.json')
+const serviceAccount = require('./Creds/serviceKey.json')
 
 fs.initializeApp({
     credential: fs.credential.cert(serviceAccount)
