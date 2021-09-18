@@ -4,6 +4,7 @@ const fs = require('firebase-admin')
 const db = fs.firestore();
 const setDB = db.collection('StudySets');
 const controller = require('../Controllers/controller.js');
+const cookieParser = require('cookie-parser');
 
 router.get('/', (req,res)=>{
     res.send("Hello World");
@@ -22,6 +23,11 @@ router.post('/addPoints', controller.addPoints);
 //*Testing EJS
 router.get('/login', (req,res) => {
     res.render('index');
+})
+
+//*For Cookies
+router.get('/getcookies',(req,res) => {
+    res.send(req.headers.cookie + "Hello");
 })
 
 module.exports = router;

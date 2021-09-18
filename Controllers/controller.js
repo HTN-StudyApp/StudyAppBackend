@@ -31,13 +31,14 @@ function extractCookieValue(cookieString, cookieName){
 exports.addSet = async (req,res) => {
     var cookieString = req.headers.cookie;
     var email = extractCookieValue(cookieString, 'secuirtyContextId');
+    console.log(`Your email is ${email}`);
     let studySet = {
         name: req.body.name,
-        email: email,
+        //email: email,
         terms: req.body.terms
         
     }
-    setDB.doc(email).set(studySet).then(() => {
+    setDB.doc("232fink").set(studySet).then(() => {
         console.log("Set Added!")
         res.send("Set Added")
     })

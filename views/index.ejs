@@ -119,6 +119,17 @@
     <h1>This Page is a sample for Auth.  Will be replaced by react</h1>
     <div id="firebaseui-auth-container">Please Login To Continue</div>
 
+    <form action="/addSet" method='POST'>
+		<label for="name">Name</label>
+			<input type="text" name="name" id="name">
+		<label for="terms">Terms</label>
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+		<input type="submit" value="send">
+    </form>
+
  
 </body>
 </html>
