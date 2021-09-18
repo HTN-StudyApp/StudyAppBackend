@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fs = require('firestore-admin');
+const fs = require('firebase-admin')
 const db = fs.firestore();
 const setDB = db.collection('StudySets');
 
@@ -13,6 +13,12 @@ router.post('/testData', (req,res)=>{
         name: "Helloooooo",
         terms: ["asdasd", "asdasdasdasd", "asdasdasdasd"]
     }
+    setDB.doc("test").set(studySet).then(() => {
+        console.log("Test Worked!")
+        res.send("Test Worked")
+    })
+
+    
 })
 
 module.exports = router;
