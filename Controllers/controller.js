@@ -41,33 +41,32 @@ exports.addSet = async (req,res) => {
 exports.readAllSets = async (req,res) => {
     var cookies = parseCookies(req)
     const email = cookies.securityContextId;
-    const snapshot = await setDB.where('email', '==', email).get();
+    let sets = [];
+    let snapshot = await setDB.doc(email).collection('OwnedSets').get();
     if(snapshot.empty){
         console.log('No mathcing documents.');
         return;
     }
     snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
-        // TODO return data somehow
+        sets.push(doc.data())
     })
-    res.redirect('/');
-
+    res.send(sets)
 }
 
 exports.readSetByName = async (req,res) => {
-    //TODO parse only sets owned by user
     var cookies = parseCookies(req)
     const email = cookies.securityContextId;
-    const snapshot = await setDB.where('email', '==', email).where('name', '==', req.params.name).get();
+    const snapshot = await setDB.doc(email).collection('OwnedSets').where('name', '==', req.params.name).get();
     if(snapshot.empty){
         console.log('No mathcing documents.');
         return;
     }
     snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
-        res.send(doc.id, '=>', doc.data());
+        res.send(doc.data());
     })
-    res.redirect('/');
+  
 }
 //*For Points
 exports.setPoints = async (req,res) => {
