@@ -9,12 +9,15 @@ router.get('/', (req,res)=>{
     res.send("Hello World");
 })
 
+//*For Sets
 router.post('/addSet',controller.addSet)
 
 router.get('/readallSets', controller.readAllSets);
 
 router.get('/readSetByName/:name', controller.readSetByName);
 
+//*For Points
+router.post('/addPoints', controller.addPoints);
 
 
 module.exports = router;

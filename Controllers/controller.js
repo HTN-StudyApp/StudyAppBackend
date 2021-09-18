@@ -2,13 +2,15 @@ const express = require("express");
 const fs = require('firebase-admin')
 const db = fs.firestore();
 const setDB = db.collection('StudySets');
+const pointsDB = db.collection('UserPoints');
 
 
-
+//*For Sets
 exports.addSet = async (req,res) => {
     let studySet = {
         name: req.body.name,
         terms: req.body.terms
+        //TODO add email parameter
     }
     setDB.doc(req.body.name).set(studySet).then(() => {
         console.log("Set Added!")
@@ -36,6 +38,15 @@ exports.readSetByName = async (req,res) => {
         console.log(doc.id, '=>', doc.data());
         res.send(doc.id, '=>', doc.data());
     })
-  
-    
+}
+//*For Points
+exports.addPoints = async (req,res) => {
+    //TODO get email from cookie
+    let points = {
+        points: req.body.points
+    }
+    pointsDB.doc("eligfinkel@gmail.com").set(points).then(() => {
+        console.log(`${points.points} added to eligfinkel@gmail.com`);
+        res.send(`${points.points} added to eligfinkel@gmail.com`);
+    })
 }
