@@ -15,10 +15,11 @@ exports.addSet = async (req,res) => {
     })
 }
 
-exports.readAllSets = async (req,res) =>{
+exports.readAllSets = async (req,res) => {
     const snapshot = await setDB.get();
     snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
+        res.send(doc.data());
     })
-    res.redirect('/');
+
 }
