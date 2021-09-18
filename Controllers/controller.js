@@ -5,14 +5,39 @@ const setDB = db.collection('StudySets');
 const pointsDB = db.collection('UserPoints');
 
 
+function extractCookieValue(cookieString, cookieName){
+
+    var pos = cookieString.indexOf(cookieName + "=");
+    var pos2 = cookieString.indexOf(";", pos);
+    var value = "";
+    //console.log("p1: " + pos + " p2: " + pos2 + " cookieString: " + cookieString);
+    
+
+    if(pos >= 0 && pos2 == -1){
+        pos = pos + cookieName.length + 1;
+        value = cookieString.substring(pos);
+        //console.log("value: " + value);
+    }
+    else if(pos >= 0 && pos2 >= 0){
+        pos = pos + cookieName.length + 1;
+        value = cookieString.substring(pos,pos2);
+        
+        
+    }
+    return value;
+}
+
 //*For Sets
 exports.addSet = async (req,res) => {
+    var cookieString = req.headers.cookie;
+    var email = extractCookieValue(cookieString, 'secuirtyContextId');
     let studySet = {
         name: req.body.name,
+        email: email,
         terms: req.body.terms
-        //TODO add email parameter
+        
     }
-    setDB.doc(req.body.name).set(studySet).then(() => {
+    setDB.doc(email).set(studySet).then(() => {
         console.log("Set Added!")
         res.send("Set Added")
     })

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="108074942175-ume2kbc6e6919u0d5of18r6hlk53e3dg.apps.googleusercontent.com">
+    <title>Log In</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+    
+<script>
+
+    function setCookie(name, value, exp){
+                var expires = "";
+                if (exp) {
+                  var date = new Date();
+                  date.setTime(date.getTime() + (exp * 1000 * 60));
+                  expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                //alert(name + "=" + (value || "") + expires + "; path=/");
+                
+              }
+    
+              function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                  var c = ca[i];
+                  while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                  if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+              }
+    
+    
+    
+    </script>
+    
+    
+    
+    
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBsauJy8FwRpXy53674hJWhz9m6k8Xx0A",
+            authDomain: "htn-studyapp.firebaseapp.com",
+            projectId: "htn-studyapp",
+            storageBucket: "htn-studyapp.appspot.com",
+            messagingSenderId: "108074942175",
+            appId: "1:108074942175:web:80104a140e15a12e8af36a",
+            measurementId: "G-7HXLMTNFN5"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    
+    
+    <script type="text/javascript">
+        // FirebaseUI config.
+        var uiConfig = {
+            signInSuccessUrl: `http://${location.hostname}:3000`,
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID
+                /*firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID*/
+            ]
+        };
+    
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+    
+    
+    
+    
+    <script type="text/javascript">
+        initApp = function() {
+          firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              // User is signed in.
+            
+              var email = user.email;
+                console.log('User Info:');
+                console.log('Email: ' + email); // This is null if the 'email' scope is not present.\
+                setCookie('securityContextId', email, 30);
+                
+            }
+          }, function(error) {
+            console.log(error);
+          });
+        };
+    
+        window.addEventListener('load', function() {
+          initApp();
+        });
+      </script>
+    
+</head>
+<body>
+    <h1>This Page is a sample for Auth.  Will be replaced by react</h1>
+    <div id="firebaseui-auth-container">Please Login To Continue</div>
+
+ 
+</body>
+</html>
