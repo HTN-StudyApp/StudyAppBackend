@@ -5,7 +5,7 @@ const setDB = db.collection('StudySets');
 const pointsDB = db.collection('UserPoints');
 
 
-
+//!NOT GOING TO WORK WITH BACKEND AUTH!!! MADE FOR COOKIES
 
 function parseCookies (request) {
     var list = {},
