@@ -23,7 +23,9 @@ function parseCookies (request) {
 //*For Sets
 exports.addSet = async (req,res) => {
     var cookies = parseCookies(req)
-    const email = cookies.securityContextId;
+    const email = cookies.userEmail;
+    var csrfToken = cookies.XSRF-TOKEN;
+    console.log(`Email is for ${email}`)
     let studySet = {
         name: req.body.name,
         email: email,
@@ -40,7 +42,7 @@ exports.addSet = async (req,res) => {
 
 exports.readAllSets = async (req,res) => {
     var cookies = parseCookies(req)
-    const email = cookies.securityContextId;
+    const email = cookies.userEmail;
     let sets = [];
     let snapshot = await setDB.doc(email).collection('OwnedSets').get();
     if(snapshot.empty){
@@ -56,7 +58,7 @@ exports.readAllSets = async (req,res) => {
 
 exports.readSetByName = async (req,res) => {
     var cookies = parseCookies(req)
-    const email = cookies.securityContextId;
+    const email = cookies.userEmail;
     const snapshot = await setDB.doc(email).collection('OwnedSets').where('name', '==', req.params.name).get();
     if(snapshot.empty){
         console.log('No mathcing documents.');
@@ -71,7 +73,7 @@ exports.readSetByName = async (req,res) => {
 //*For Points
 exports.setPoints = async (req,res) => {
     var cookies = parseCookies(req)
-    const email = cookies.securityContextId;
+    const email = cookies.userEmail;
     let points = {
         points: req.body.points,
         email: email
@@ -86,7 +88,7 @@ exports.setPoints = async (req,res) => {
 
 exports.readPointsByEmail = async (req,res) => {
     var cookies = parseCookies(req)
-    const email = cookies.securityContextId;
+    const email = cookies.userEmail;
     const snapshot = await setDB.where('email', '==', email).get();
     if(snapshot.empty){
         console.log('No mathcing documents.');

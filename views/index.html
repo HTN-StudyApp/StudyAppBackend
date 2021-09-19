@@ -1,16 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home page</title>
-  <link rel="stylesheet" href="./mvp.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="108074942175-ume2kbc6e6919u0d5of18r6hlk53e3dg.apps.googleusercontent.com">
+    <title>Log In</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+    
+
+   
 </head>
 <body>
-   <main> 
-     <h1>Home page</h1>
-     <p>This page is public</p>
-     <a href="/profile">profile</a>
-   </main>
+  
+
+	<h2>Add Set</h2>
+    <form action="/addSet" method='POST'>
+		<label for="name">Name</label>
+			<input type="text" name="name" id="name">
+		<label for="terms">Terms</label>
+		<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+			<input type="text" name="terms[]">
+		<label for="answers">answers</label>
+			<input type="text" name="answers[]">
+			<input type="text" name="answers[]">
+			<input type="text" name="answers[]">
+			<input type="text" name="answers[]">
+		<input type="submit" value="Add Set">
+    </form>
+
+	<h2>Set Points</h2>
+	<form action="/setPoints" method="POST">
+		<label for="points">Points:</label>
+			<input type="text" name="points" id="points">
+			<input type="submit" value="set points">
+	
+	</form>
+	<a href="/readPoints">readPoints</a>
+	<a href="/readAllSets">Read all Sets</a>
+	<a href="/sessionLogout">Log Out</a>
+ 
 </body>
 </html>

@@ -8,7 +8,8 @@ const serviceAccount = require('./Creds/serviceKey.json')
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-const csrfMiddleware = csrf({ cookie: true });
+var csrfProtection = csrf({ cookie: true });
+var parseForm = bodyParser.urlencoded({ extended: false });
 const db = admin.firestore(); 
 
 const routes = require('./Routes/router.js'); // Imports routes for the products
@@ -20,8 +21,7 @@ app.use(express.static("static"));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(csrfMiddleware);
-
+app.use(csrfProtection);
 
 
 
