@@ -112,12 +112,17 @@
         window.addEventListener('load', function() {
           initApp();
         });
+
+		function logOut(){
+			setCookie('securityContextId', '',30);
+		}
       </script>
     
 </head>
 <body>
     <h1>This Page is a sample for Auth.  Will be replaced by react</h1>
     <div id="firebaseui-auth-container"></div>
+	<button onclick='logOut()'>Log Out</button>
 
 	<h2>Add Set</h2>
     <form action="/addSet" method='POST'>
